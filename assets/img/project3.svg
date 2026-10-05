@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+    <title id="title">Зображення третього проєкту</title>
+    <desc id="desc">Композиція третьої роботи портфоліо з акцентною золотистою лінією.</desc>
+    <rect width="1200" height="800" fill="#222222"/>
+    <rect x="100" y="100" width="1000" height="600" fill="#ffffff"/>
+    <path d="M100 620 L360 340 L560 500 L760 220 L1100 620 Z" fill="#111111"/>
+    <path d="M100 620 L360 340 L560 500 L760 220 L1100 620" fill="none" stroke="#d4af37" stroke-width="22"/>
+    <circle cx="860" cy="240" r="70" fill="#eeeeee"/>
+    <rect x="170" y="160" width="260" height="22" fill="#444444"/>
+    <rect x="170" y="208" width="180" height="14" fill="#777777"/>
+</svg>
