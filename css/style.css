@@ -202,7 +202,8 @@ footer a {
     }
 
     #works {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        max-width: 680px;
     }
 
     aside {
@@ -241,10 +242,8 @@ footer a {
     }
 
     #works {
-        grid-template-columns: repeat(
-            3,
-            minmax(0, 1fr)
-        );
+        max-width: none;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 20px;
     }
 
