@@ -1,4 +1,17 @@
-/* Базовые настройки */
+:root {
+    --color-bg: #f5f5f5;
+    --color-surface: #ffffff;
+    --color-secondary: #eeeeee;
+    --color-heading: #111111;
+    --color-text: #222222;
+    --color-nav: #444444;
+    --color-caption: #666666;
+    --color-border: #d1d5db;
+    --color-accent: #765600;
+    --color-footer-link: #e6e6e6;
+    --font-heading: Georgia, "Times New Roman", serif;
+    --font-body: Arial, Helvetica, sans-serif;
+}
 
 *,
 *::before,
@@ -15,15 +28,43 @@ body {
         "footer";
     grid-template-columns: minmax(0, 1fr);
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-body);
     font-size: 1rem;
     line-height: 1.5;
-    color: #222222;
-    background-color: #f5f5f5;
+    color: var(--color-text);
+    background-color: var(--color-bg);
     overflow-wrap: anywhere;
 }
 
-/* Шапка и навигация — Flexbox */
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+    color: var(--color-heading);
+}
+
+h1 {
+    margin: 0;
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+h2 {
+    margin: 0 0 16px;
+    font-size: 1.75rem;
+    line-height: 1.25;
+}
+
+h3 {
+    margin: 0 0 12px;
+    font-size: 1.25rem;
+    line-height: 1.25;
+}
+
+a:focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+}
 
 header {
     grid-area: header;
@@ -32,15 +73,8 @@ header {
     flex-wrap: wrap;
     gap: 16px;
     padding: 24px 16px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #d1d5db;
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2rem;
-    line-height: 1.2;
-    color: #111111;
+    background-color: var(--color-surface);
+    border-bottom: 1px solid var(--color-border);
 }
 
 nav {
@@ -48,28 +82,24 @@ nav {
     flex-direction: column;
     flex-wrap: wrap;
     gap: 12px;
+    font-size: 1rem;
+    line-height: 1.5;
 }
 
 nav a {
     display: block;
     padding: 10px 12px;
-    color: #444444;
+    color: var(--color-nav);
     text-decoration: none;
     border-radius: 6px;
 }
 
 nav a:hover,
 nav a:focus-visible {
-    color: #765600;
-    background-color: #f5f5f5;
+    color: var(--color-nav);
+    background-color: var(--color-bg);
+    text-decoration: underline;
 }
-
-a:focus-visible {
-    outline: 2px solid #b8860b;
-    outline-offset: 3px;
-}
-
-/* Основное содержимое */
 
 main {
     grid-area: main;
@@ -77,72 +107,63 @@ main {
     width: 100%;
     max-width: 1100px;
     margin: 0 auto;
-    padding: 24px 16px;
+    padding: 32px 16px;
 }
 
 section {
-    margin-bottom: 32px;
+    margin-bottom: 48px;
 }
 
 section:last-child {
     margin-bottom: 0;
 }
 
-section h2 {
-    margin: 0 0 16px;
-    color: #111111;
+#about p {
+    max-width: 65ch;
 }
-
 
 #works {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
-    gap: 16px;
+    gap: 32px;
 }
-
 
 #works > h2 {
     grid-column: 1 / -1;
     margin-bottom: 0;
 }
 
-
-article {
+#works > article {
     min-width: 0;
     margin: 0;
-    padding: 18px;
-    background-color: #ffffff;
-    border: 1px solid #d1d5db;
+    padding: 20px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
     border-radius: 6px;
+    transition: border-color 160ms ease;
 }
-
-article h3 {
-    margin: 0 0 12px;
-    font-size: 1.125rem;
-    color: #111111;
-}
-
-article p {
-    margin: 0;
-}
-
-/* Адаптивные изображения */
 
 img {
     max-width: 100%;
     height: auto;
 }
 
-article img {
+#works > article img {
     display: block;
     width: 100%;
     aspect-ratio: 3 / 2;
     margin-bottom: 12px;
     object-fit: cover;
-    border-radius: 6px;
+    border-radius: 4px;
 }
 
-/* Блок навыков */
+#works > article p {
+    margin: 0;
+    color: var(--color-caption);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    transition: color 160ms ease;
+}
 
 aside {
     grid-area: aside;
@@ -150,15 +171,11 @@ aside {
     min-width: 0;
     width: calc(100% - 32px);
     max-width: 1068px;
-    margin: 0 auto 24px;
-    padding: 18px;
-    background-color: #eeeeee;
-    border-left: 4px solid #b8860b;
-}
-
-aside h2 {
-    margin: 0 0 12px;
-    color: #111111;
+    margin: 0 auto 32px;
+    padding: 20px;
+    color: var(--color-text);
+    background-color: var(--color-secondary);
+    border: 1px solid var(--color-border);
 }
 
 aside ul {
@@ -166,27 +183,52 @@ aside ul {
     padding-left: 20px;
 }
 
-/* Подвал */
-
 footer {
     grid-area: footer;
     padding: 20px 16px;
-    background-color: #222222;
-    color: #ffffff;
-    font-size: 0.9rem;
+    color: var(--color-surface);
+    background-color: var(--color-text);
+    font-size: 0.875rem;
+    line-height: 1.5;
     text-align: center;
 }
 
 footer h2 {
-    margin-top: 0;
-    color: #ffffff;
+    color: var(--color-surface);
 }
 
 footer a {
-    color: #d4af37;
+    display: inline-block;
+    margin: 0 2px;
+    color: var(--color-footer-link);
 }
 
-/* Планшет — от 600px */
+footer a:hover {
+    color: var(--color-surface);
+}
+
+footer span {
+    display: inline-block;
+    margin: 0 2px;
+}
+
+/* Акцент з'являється лише при наведенні, щоб інтерфейс не конкурував із кольорами самих робіт. */
+@media (hover: hover) {
+    #works > article:hover {
+        border-color: var(--color-accent);
+    }
+
+    #works > article:hover p {
+        color: var(--color-accent);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #works > article,
+    #works > article p {
+        transition: none;
+    }
+}
 
 @media (min-width: 600px) {
     header {
@@ -198,22 +240,21 @@ footer a {
     }
 
     main {
-        padding: 28px 24px;
+        padding: 36px 24px;
     }
 
     #works {
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         max-width: 680px;
+        gap: 32px;
     }
 
     aside {
         width: calc(100% - 48px);
         max-width: 1052px;
-        margin-bottom: 28px;
+        margin-bottom: 36px;
     }
 }
-
-/* Компьютер — от 1024px */
 
 @media (min-width: 1024px) {
     body {
@@ -232,25 +273,25 @@ footer a {
         padding: 32px 24px;
     }
 
-    header h1 {
+    h1 {
         font-size: 2.5rem;
     }
 
     main {
-        max-width: 1200px;
-        padding: 32px;
+        max-width: none;
+        padding: 40px 32px;
     }
 
     #works {
         max-width: none;
         grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 20px;
+        gap: 40px;
     }
 
     aside {
         width: auto;
         max-width: none;
-        margin: 32px 24px 32px 0;
+        margin: 40px 24px 40px 0;
     }
 
     footer {
