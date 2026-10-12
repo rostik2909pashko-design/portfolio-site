@@ -1,407 +1,90 @@
+/* Спільні стилі трекера настрою та адаптивної історії. */
 :root {
-    --color-bg: #f5f5f5;
-    --color-surface: #ffffff;
-    --color-secondary: #eeeeee;
-    --color-heading: #111111;
-    --color-text: #222222;
-    --color-nav: #444444;
-    --color-caption: #666666;
-    --color-border: #d1d5db;
-    --color-accent: #765600;
-    --color-footer-link: #e6e6e6;
-    --font-heading: Georgia, "Times New Roman", serif;
-    --font-body: Arial, Helvetica, sans-serif;
+    --bg: #f7f8fa;
+    --surface: #ffffff;
+    --text: #20283a;
+    --muted: #586477;
+    --border: #d8dfeb;
+    --accent: #3656a5;
 }
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
+* { box-sizing: border-box; }
 body {
     display: grid;
-    grid-template-areas:
-        "header"
-        "main"
-        "aside"
-        "footer";
+    grid-template-areas: "header" "main" "aside" "footer";
     grid-template-columns: minmax(0, 1fr);
     margin: 0;
-    font-family: var(--font-body);
-    font-size: 1rem;
-    line-height: 1.5;
-    color: var(--color-text);
-    background-color: var(--color-bg);
+    font: 16px/1.6 Arial, Helvetica, sans-serif;
+    color: var(--text);
+    background: var(--bg);
     overflow-wrap: anywhere;
 }
-
-h1,
-h2,
-h3 {
-    font-family: var(--font-heading);
-    color: var(--color-heading);
-}
-
-h1 {
-    margin: 0;
-    font-size: 2rem;
-    line-height: 1.2;
-}
-
-h2 {
-    margin: 0 0 16px;
-    font-size: 1.75rem;
-    line-height: 1.25;
-}
-
-h3 {
-    margin: 0 0 12px;
-    font-size: 1.25rem;
-    line-height: 1.25;
-}
-
-a:focus-visible {
-    outline: 2px solid currentColor;
-    outline-offset: 3px;
-}
-
+h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; line-height: 1.25; }
+h1 { margin: 0; font-size: clamp(2rem, 4vw, 2.75rem); }
+h2 { margin: 0 0 16px; font-size: 1.7rem; }
+h3 { margin: 0 0 14px; font-size: 1.2rem; }
+p { margin: 0 0 12px; }
+a { color: var(--accent); }
+a:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; }
 header {
     grid-area: header;
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
-    gap: 16px;
-    padding: 24px 16px;
-    background-color: var(--color-surface);
-    border-bottom: 1px solid var(--color-border);
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    padding: 28px 24px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
 }
-
-nav {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    gap: 12px;
-    font-size: 1rem;
-    line-height: 1.5;
-}
-
-nav a {
-    display: block;
-    padding: 10px 12px;
-    color: var(--color-nav);
-    text-decoration: none;
-    border-radius: 6px;
-}
-
-nav a:hover,
-nav a:focus-visible {
-    color: var(--color-nav);
-    background-color: var(--color-bg);
-    text-decoration: underline;
-}
-
-main {
-    grid-area: main;
-    min-width: 0;
-    width: 100%;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 32px 16px;
-}
-
-section {
-    margin-bottom: 48px;
-}
-
-section:last-child {
-    margin-bottom: 0;
-}
-
-#about p {
-    max-width: 65ch;
-}
-
-#gallery {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 32px;
-}
-
-
-
-#gallery > article {
-    min-width: 0;
-    margin: 0;
-    padding: 20px;
-    background-color: var(--color-surface);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    transition: border-color 160ms ease;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
-}
-
-#gallery > article img {
-    display: block;
-    width: 100%;
-    aspect-ratio: 3 / 2;
-    margin-bottom: 12px;
-    object-fit: cover;
-    border-radius: 4px;
-}
-
-#gallery > article p {
-    margin: 0;
-    color: var(--color-caption);
-    font-size: 0.875rem;
-    line-height: 1.5;
-    transition: color 160ms ease;
-}
-
-aside {
-    grid-area: aside;
-    align-self: start;
-    min-width: 0;
-    width: calc(100% - 32px);
-    max-width: 1068px;
-    margin: 0 auto 32px;
-    padding: 20px;
-    color: var(--color-text);
-    background-color: var(--color-secondary);
-    border: 1px solid var(--color-border);
-}
-
-aside ul {
-    margin: 0;
-    padding-left: 20px;
-}
-
-footer {
-    grid-area: footer;
-    padding: 20px 16px;
-    color: var(--color-surface);
-    background-color: var(--color-text);
-    font-size: 0.875rem;
-    line-height: 1.5;
-    text-align: center;
-}
-
-footer h2 {
-    color: var(--color-surface);
-}
-
-footer a {
-    display: inline-block;
-    margin: 0 2px;
-    color: var(--color-footer-link);
-}
-
-footer a:hover {
-    color: var(--color-surface);
-}
-
-footer span {
-    display: inline-block;
-    margin: 0 2px;
-}
-
-/* Акцент з'являється лише при наведенні, щоб інтерфейс не конкурував із кольорами самих робіт. */
-@media (hover: hover) {
-    #gallery > article:hover {
-        border-color: var(--color-accent);
-    }
-
-    #gallery > article:hover p {
-        color: var(--color-accent);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    #gallery > article,
-    #gallery > article p {
-        transition: none;
-    }
-}
-
-@media (min-width: 600px) {
-    header {
-        padding: 28px 24px;
-    }
-
-    nav {
-        flex-direction: row;
-    }
-
-    main {
-        padding: 36px 24px;
-    }
-
-    #gallery {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        max-width: 680px;
-        gap: 32px;
-    }
-
-    aside {
-        width: calc(100% - 48px);
-        max-width: 1052px;
-        margin-bottom: 36px;
-    }
-}
-
-@media (min-width: 1024px) {
-    body {
-        grid-template-areas:
-            "header header"
-            "main aside"
-            "footer footer";
-        grid-template-columns:
-            minmax(0, 3fr) minmax(0, 1fr);
-    }
-
-    header {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: 32px 24px;
-    }
-
-    h1 {
-        font-size: 2.5rem;
-    }
-
-    main {
-        max-width: none;
-        padding: 40px 32px;
-    }
-
-    #gallery {
-        max-width: none;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 40px;
-    }
-
-    aside {
-        width: auto;
-        max-width: none;
-        margin: 40px 24px 40px 0;
-    }
-
-    footer {
-        padding: 24px;
-    }
-}
-
-/* Практикум 7: динамічна галерея та позначення нещодавніх робіт. */
-#projects-count {
-    margin: 0 0 24px;
-    color: var(--color-caption);
-}
-
-#gallery > article p + p {
-    margin-top: 4px;
-}
-
-#gallery > article.recent {
-    border-color: var(--color-nav);
-}
-
-.project-badge {
-    display: inline-block;
-    margin-top: 12px;
-    padding: 4px 8px;
-    border-radius: 4px;
-    color: var(--color-text);
-    background-color: var(--color-secondary);
-    font-size: 0.8125rem;
-}
-
-/* Практикум 8: форма, перевірка року та фільтр категорій. */
-#gallery > article.hidden {
-    display: none;
-}
-
-.gallery-filter {
+.eyebrow { color: var(--muted); font-size: 0.875rem; margin-bottom: 6px; }
+nav { display: flex; flex-wrap: wrap; gap: 12px; }
+nav a { padding: 10px 12px; text-decoration: none; border-radius: 6px; }
+nav a:hover { background: var(--bg); text-decoration: underline; }
+main { grid-area: main; min-width: 0; padding: 32px 24px; }
+section + section { margin-top: 32px; }
+#about > p { max-width: 65ch; }
+.demo-note { color: var(--muted); font-size: 0.875rem; }
+.summary {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: 12px;
+    gap: 12px 24px;
     margin-bottom: 24px;
+    padding: 18px 20px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--surface);
 }
-
-.gallery-filter p {
-    margin: 0;
-    color: var(--color-caption);
-}
-
-.project-entry {
-    margin-top: 40px;
-    padding: 24px;
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-    background: var(--color-surface);
-}
-
-.project-entry > p,
-.form-field small {
-    color: var(--color-caption);
-    font-size: 0.875rem;
-}
-
-#project-form {
-    display: grid;
-    gap: 16px;
-}
-
-.form-field {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
+.summary p { margin: 0; }
+#avg-mood { font-weight: bold; color: var(--accent); }
+#entries-count, #period-status { color: var(--muted); font-size: 0.875rem; }
+#mood-history { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+.mood-card {
     min-width: 0;
+    padding: 22px;
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--muted);
+    border-radius: 8px;
+    background: var(--surface);
 }
-
-input,
-select,
-button {
-    max-width: 100%;
-    min-height: 44px;
-    padding: 10px 12px;
-    border: 1px solid var(--color-nav);
-    border-radius: 4px;
-    font: inherit;
-    color: var(--color-text);
-    background: var(--color-surface);
+.mood-card.good { background: #eef7f1; border-top-color: #287346; }
+.mood-card.neutral { background: #f0f2fb; border-top-color: #5568a8; }
+.mood-card.hard { background: #fff4e8; border-top-color: #a95c17; }
+.mood-rating { font-size: 0.875rem; font-weight: bold; margin-bottom: 12px; }
+.mood-note { margin: 0; }
+aside { grid-area: aside; align-self: start; margin: 0 24px 32px; padding: 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; }
+aside h2 { font-size: 1.4rem; }
+aside p { font-size: 0.875rem; color: var(--muted); margin-bottom: 0; }
+.mood-scale { padding-left: 24px; margin: 0 0 20px; }
+.mood-scale li { padding: 4px 0; }
+footer { grid-area: footer; padding: 24px; text-align: center; font-size: 0.875rem; background: var(--surface); border-top: 1px solid var(--border); }
+footer p { margin-bottom: 4px; }
+@media (min-width: 600px) {
+    #mood-history { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-
-input:focus-visible,
-select:focus-visible,
-button:focus-visible {
-    outline: 2px solid var(--color-accent);
-    outline-offset: 3px;
-}
-
-button {
-    justify-self: start;
-    cursor: pointer;
-    color: var(--color-surface);
-    background: var(--color-text);
-}
-
-.form-field .field-error {
-    margin: 0;
-    color: #9b1c1c;
-    font-size: 0.875rem;
-}
-
-.field-error:empty,
-#form-status:empty {
-    display: none;
-}
-
-input[aria-invalid="true"] {
-    border-color: #9b1c1c;
+@media (min-width: 1024px) {
+    body { grid-template-areas: "header header" "main aside" "footer footer"; grid-template-columns: minmax(0, 3fr) minmax(0, 1fr); }
+    main { padding: 40px 32px; }
+    aside { margin: 40px 24px 32px 0; }
+    #mood-history { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }

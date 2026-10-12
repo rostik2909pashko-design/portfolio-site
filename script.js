@@ -1,184 +1,73 @@
 'use strict';
 
-console.log('script.js підключено');
-console.log('Пашко Ростислав | ІП-53 | Практикум №8 | Варіант 2');
+console.log('Пашко Ростислав | ІП-53 | Практикум №7 | Варіант 3');
 
-const currentYear = new Date().getFullYear();
-const selectedCategory = 'Вебдизайн';
-
-// Навчальні дані для перевірки різних категорій і граничних років.
-const works = [
-    { title: 'Навчальний лендинг', year: 2021, category: 'Вебдизайн',
-      image: 'assets/img/project1.svg', alt: 'Ескіз навчального лендингу' },
-    { title: 'Навчальна айдентика', year: 2022, category: 'Графічний дизайн',
-      image: 'assets/img/project2.svg', alt: 'Ескіз навчальної айдентики' },
-    { title: 'Макет каталогу', year: 2023, category: 'Вебдизайн',
-      image: 'assets/img/project2.svg', alt: 'Ескіз каталогу' },
-    { title: 'Афіша події', year: 2024, category: 'Графічний дизайн',
-      image: 'assets/img/project3.svg', alt: 'Ескіз афіші події' },
-    { title: 'Дизайн галереї', year: 2025, category: 'Вебдизайн',
-      image: 'assets/img/project1.svg', alt: 'Ескіз дизайну галереї' },
-    { title: 'Макет портфоліо', year: 2026, category: 'Вебдизайн',
-      image: 'assets/img/project3.svg', alt: 'Ескіз портфоліо' }
+// Навчальні записи: усі п’ять рівнів настрою та різні нотатки.
+const moodEntries = [
+    { date: '2026-10-01', mood: 2, note: 'Складний день: багато навчальних завдань.' },
+    { date: '2026-10-02', mood: 4, note: 'Вдалося завершити заплановану роботу.' },
+    { date: '2026-10-03', mood: 3, note: 'Звичайний день без помітних змін.' },
+    { date: '2026-10-04', mood: 5, note: 'Приємна зустріч і час для відпочинку.' },
+    { date: '2026-10-05', mood: 1, note: 'Було важко зосередитися на навчанні.' },
+    { date: '2026-10-06', mood: 4, note: 'Прогулянка та виконані завдання.' }
 ];
+const listContainer = document.querySelector('#mood-history');
+const averageElement = document.querySelector('#avg-mood');
+const entriesCount = document.querySelector('#entries-count');
+const periodStatus = document.querySelector('#period-status');
 
-const listContainer = document.querySelector('#gallery');
-const projectsCount = document.querySelector('#projects-count');
-const categoryFilter = document.querySelector('#category-filter');
-const filterCount = document.querySelector('#filter-count');
-const form = document.querySelector('#project-form');
-const titleInput = document.querySelector('#project-title');
-const yearInput = document.querySelector('#project-year');
-const categoryInput = document.querySelector('#project-category');
-const yearError = document.querySelector('#year-error');
-const formStatus = document.querySelector('#form-status');
-yearInput.max = String(currentYear);
-
-// Видаляє першу статичну картку з HTML; решту прибере функція рендеру.
-const placeholder = document.querySelector('#gallery article');
+// Статичний article залишається орієнтиром у HTML і видаляється програмно.
+const placeholder = document.querySelector('#mood-history article');
 if (placeholder) placeholder.remove();
 
-// Повертає true, якщо за умовою варіанта роботі не більше двох років.
-const isRecent = year => (currentYear - year) <= 2;
+// Стрілкова функція повертає текстову назву рівня настрою.
+const moodToLabel = mood => ({
+    1: 'Дуже складний', 2: 'Складний', 3: 'Нейтральний',
+    4: 'Гарний', 5: 'Чудовий'
+})[mood] ?? 'Невідомо';
+const moodClasses = {
+    'Дуже складний': 'hard', 'Складний': 'hard',
+    'Нейтральний': 'neutral', 'Гарний': 'good', 'Чудовий': 'good'
+};
 
-// Виводить роботи обраної категорії та повертає кількість знайдених робіт.
-function listWorksByCategory(items, category) {
-    let count = 0;
-
-    console.log(`Роботи категорії «${category}»:`);
-    for (const work of items) {
-        if (work.category === category) {
-            console.log(`${work.title} | ${work.year} | ${work.category}`);
-            count += 1;
-        }
-    }
-
-    console.log(`Знайдено робіт: ${count}`);
-    return count;
+// Підраховує середній настрій циклом for...of; порожній список має null.
+function getAverageMood(entries) {
+    if (entries.length === 0) return null;
+    let sum = 0;
+    for (const entry of entries) sum += entry.mood;
+    return sum / entries.length;
 }
 
-// Позначає роботи старші трьох років і повертає їхню кількість.
-function classifyWorksByAge(items, referenceYear) {
-    let olderCount = 0;
-
-    console.log('Класифікація за віком:');
-    for (const work of items) {
-        const age = referenceYear - work.year;
-        if (age > 3) {
-            console.log(`${work.title} (${work.year}): старша 3 років`);
-            olderCount += 1;
-        } else {
-            console.log(`${work.title} (${work.year}): не старша 3 років`);
-        }
-    }
-
-    console.log(`Робіт старших 3 років: ${olderCount}`);
-    return olderCount;
-}
-
-console.log(`Кількість робіт у масиві: ${works.length}`);
-console.log(`Тип title: ${typeof works[0].title}`);
-console.log(`Тип year: ${typeof works[0].year}`);
-console.log(`Тип результату isRecent: ${typeof isRecent(works[0].year)}`);
-
-listWorksByCategory(works, selectedCategory);
-classifyWorksByAge(works, currentYear);
-
-console.log('Перевірка стрілкової функції isRecent:');
-for (const work of works) {
-    console.log(`${work.title} (${work.year}): isRecent = ${isRecent(work.year)}`);
-}
-
-// Створює картки з масиву, позначає нещодавні роботи та оновлює лічильник.
-function renderProjects(projects) {
+// Створює article з датою, оцінкою, нотаткою, data-mood і класом за moodToLabel.
+function renderMoodHistory(entries) {
     listContainer.querySelectorAll('article').forEach(card => card.remove());
-
-    for (const project of projects) {
+    for (const entry of entries) {
         const card = document.createElement('article');
-        card.classList.add('project-card');
-        card.dataset.category = project.category;
-        card.dataset.year = String(project.year);
-
-        const title = document.createElement('h3');
-        title.textContent = project.title;
-        const image = document.createElement('img');
-        image.src = project.image;
-        image.alt = project.alt;
-        const year = document.createElement('p');
-        year.textContent = `Рік: ${project.year}`;
-        const category = document.createElement('p');
-        category.textContent = project.category;
-        card.append(title, image, year, category);
-
-        if (isRecent(project.year)) {
-            card.classList.add('recent');
-            const badge = document.createElement('span');
-            badge.classList.add('project-badge');
-            badge.textContent = 'Нещодавня робота';
-            card.append(badge);
-        }
-
+        const label = moodToLabel(entry.mood);
+        card.classList.add('mood-card', moodClasses[label] ?? 'neutral');
+        card.dataset.mood = String(entry.mood);
+        const date = document.createElement('h3');
+        date.textContent = entry.date;
+        const rating = document.createElement('p');
+        rating.classList.add('mood-rating');
+        rating.textContent = `Рівень: ${entry.mood} з 5 — ${label}`;
+        const note = document.createElement('p');
+        note.classList.add('mood-note');
+        note.textContent = entry.note || 'Без нотатки.';
+        card.append(date, rating, note);
         listContainer.append(card);
     }
-
-    projectsCount.textContent = `Кількість робіт: ${projects.length}`;
-    applyCategoryFilter();
+    const average = getAverageMood(entries);
+    averageElement.textContent = average === null ? 'Ще немає записів'
+        : `Середній настрій: ${average.toLocaleString('uk-UA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} із 5`;
+    entriesCount.textContent = `Записів: ${entries.length}`;
+    if (average === null) periodStatus.textContent = '';
+    else if (average >= 3) periodStatus.textContent = 'Гарний тиждень';
+    else periodStatus.textContent = 'Важкий тиждень';
 }
-
-renderProjects(works);
-console.log(`DOM: ${listContainer.querySelectorAll('article').length} карток; recent: ${listContainer.querySelectorAll('.recent').length}`);
-
-// Приховує картки інших категорій; усі записи залишаються в масиві та DOM.
-function applyCategoryFilter() {
-    const category = categoryFilter.value;
-    let visibleCount = 0;
-    for (const card of listContainer.querySelectorAll('article')) {
-        const hidden = category !== 'all' && card.dataset.category !== category;
-        card.classList.toggle('hidden', hidden);
-        if (!hidden) visibleCount += 1;
-    }
-    filterCount.textContent = `Показано робіт: ${visibleCount}`;
+renderMoodHistory(moodEntries);
+console.log(`DOM: ${listContainer.querySelectorAll('article').length} записів`);
+console.log(`Середнє: ${getAverageMood(moodEntries).toFixed(2)}`);
+for (const entry of moodEntries) {
+    console.log(`${entry.date} | ${entry.mood} | ${moodToLabel(entry.mood)}`);
 }
-
-// Подія change перемикає фільтр без повторного створення карток.
-categoryFilter.addEventListener('change', applyCategoryFilter);
-
-// Подія input відразу перевіряє, чи рік не перевищує поточний.
-function validateYear() {
-    const future = yearInput.value !== '' && Number(yearInput.value) > currentYear;
-    const message = future ? `Рік не може бути в майбутньому. Максимум — ${currentYear}.` : '';
-    yearInput.setCustomValidity(message);
-    yearError.textContent = message;
-    yearInput.setAttribute('aria-invalid', String(!yearInput.validity.valid));
-}
-yearInput.addEventListener('input', validateYear);
-
-// Подія input відхиляє назву, яка складається лише з пробілів.
-titleInput.addEventListener('input', () => {
-    titleInput.setCustomValidity(titleInput.value !== '' && titleInput.value.trim() === ''
-        ? 'Введіть назву роботи, а не лише пробіли.' : '');
-});
-
-// Подія submit додає коректний запис і оновлює галерею без перезавантаження.
-form.addEventListener('submit', event => {
-    event.preventDefault();
-    validateYear();
-    if (!form.reportValidity()) return;
-    const title = titleInput.value.trim();
-    const year = Number(yearInput.value);
-    const category = categoryInput.value;
-    const project = {
-        title, year, category,
-        image: category === 'Вебдизайн' ? 'assets/img/project1.svg' : 'assets/img/project2.svg',
-        alt: `Навчальний ескіз роботи «${title}»`
-    };
-    works.push(project);
-    renderProjects(works);
-    form.reset();
-    yearInput.setCustomValidity('');
-    yearInput.removeAttribute('aria-invalid');
-    yearError.textContent = '';
-    const hidden = categoryFilter.value !== 'all' && categoryFilter.value !== category;
-    formStatus.textContent = `Додано роботу «${title}».${hidden ? ' Щоб її побачити, виберіть її категорію або «Усі роботи».' : ''}`;
-    console.log(`Додано: ${title} | ${year} | ${category}; усього робіт: ${works.length}`);
-});
