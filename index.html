@@ -11,13 +11,37 @@
 <body>
 <header>
     <div><p class="eyebrow">Щоденник емоцій</p><h1>Трекер настрою</h1></div>
-    <nav aria-label="Основна навігація"><a href="#about">Про щоденник</a><a href="#history">Історія</a></nav>
+    <nav aria-label="Основна навігація"><a href="#about">Про щоденник</a><a href="#entry">Новий запис</a>
+            <a href="#history">Історія</a></nav>
 </header>
 <main>
     <section id="about">
         <h2>Як пройшов день</h2>
         <p>Оцінка настрою та коротка нотатка допомагають помічати зміни протягом тижня.</p>
-        <p class="demo-note">Нижче наведено шість навчальних прикладів записів.</p>
+        <p class="demo-note">Почніть із шести навчальних прикладів і додайте власний запис через форму.</p>
+    </section>
+    <section id="entry" aria-labelledby="entry-heading" class="entry-panel">
+        <h2 id="entry-heading">Додати запис настрою</h2>
+        <p class="demo-note">Нові записи зберігаються до перезавантаження сторінки.</p>
+        <form id="mood-form">
+            <div class="form-field">
+                <label for="mood-date">Дата запису</label>
+                <input id="mood-date" name="date" type="date" required>
+            </div>
+            <div class="form-field">
+                <label for="mood-value">Настрій від 1 до 5</label>
+                <input id="mood-value" name="mood" type="number" required min="1" max="5" step="1" aria-describedby="mood-hint mood-error">
+                <p id="mood-hint" class="field-hint">Ціле число: 1 — дуже складний, 5 — чудовий.</p>
+                <p id="mood-error" class="field-error" aria-live="polite" hidden></p>
+            </div>
+            <div class="form-field note-field">
+                <label for="mood-note">Нотатка (необов’язково)</label>
+                <input id="mood-note" name="note" type="text" maxlength="200" aria-describedby="note-remaining">
+                <p id="note-remaining" class="field-hint" aria-live="polite">Залишилося символів: 200</p>
+            </div>
+            <button type="submit">Додати запис</button>
+        </form>
+        <p id="form-status" class="form-status" role="status"></p>
     </section>
     <section id="history" aria-labelledby="history-heading">
         <h2 id="history-heading">Історія настрою</h2>

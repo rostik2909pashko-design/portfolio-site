@@ -1,6 +1,6 @@
 'use strict';
 
-console.log('Пашко Ростислав | ІП-53 | Практикум №7 | Варіант 3');
+console.log('Пашко Ростислав | ІП-53 | Практикум №8 | Варіант 3');
 
 // Навчальні записи: усі п’ять рівнів настрою та різні нотатки.
 const moodEntries = [
@@ -71,3 +71,54 @@ console.log(`Середнє: ${getAverageMood(moodEntries).toFixed(2)}`);
 for (const entry of moodEntries) {
     console.log(`${entry.date} | ${entry.mood} | ${moodToLabel(entry.mood)}`);
 }
+
+
+// Знаходимо форму й поля для додавання запису з тією самою структурою.
+const form = document.querySelector('#mood-form');
+const dateInput = document.querySelector('#mood-date');
+const moodInput = document.querySelector('#mood-value');
+const noteInput = document.querySelector('#mood-note');
+const moodError = document.querySelector('#mood-error');
+const noteRemaining = document.querySelector('#note-remaining');
+const formStatus = document.querySelector('#form-status');
+
+// Власна валідація на input: ціле число від 1 до 5; порожнє поле перевіряє required.
+function validateMood() {
+    const value = Number(moodInput.value);
+    const invalid = moodInput.value !== '' &&
+        (!Number.isInteger(value) || value < 1 || value > 5);
+    const message = invalid ? 'Введіть ціле число від 1 до 5.' : '';
+    moodInput.setCustomValidity(message);
+    moodInput.setAttribute('aria-invalid', String(invalid));
+    moodError.textContent = message;
+    moodError.hidden = !invalid;
+}
+moodInput.addEventListener('input', validateMood);
+
+// Друга подія варіанта: залишок до maxlength оновлюється на кожному input.
+function updateNoteCounter() {
+    noteRemaining.textContent =
+        `Залишилося символів: ${noteInput.maxLength - noteInput.value.length}`;
+}
+noteInput.addEventListener('input', updateNoteCounter);
+updateNoteCounter();
+
+// Submit без перезавантаження: перевірка, push, рендер і reset після успіху.
+form.addEventListener('submit', event => {
+    event.preventDefault();
+    validateMood();
+    if (!form.reportValidity()) return;
+    const entry = {
+        date: dateInput.value,
+        mood: Number(moodInput.value),
+        note: noteInput.value.trim()
+    };
+    moodEntries.push(entry);
+    renderMoodHistory(moodEntries);
+    form.reset();
+    validateMood();
+    updateNoteCounter();
+    formStatus.textContent = `Додано запис за ${entry.date}.`;
+    console.log('Додано запис:', entry);
+    console.log(`DOM: ${moodEntries.length} записів | Середнє: ${getAverageMood(moodEntries).toFixed(2)}`);
+});

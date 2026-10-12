@@ -88,3 +88,24 @@ footer p { margin-bottom: 4px; }
     aside { margin: 40px 24px 32px 0; }
     #mood-history { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
+
+/* Форма практикуму 8: пов’язані підписи, видимий фокус і повідомлення. */
+.entry-panel { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 24px; }
+#mood-form { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px 24px; }
+.form-field { min-width: 0; }
+label { display: block; font-weight: bold; margin-bottom: 7px; }
+input { display: block; width: 100%; min-width: 0; min-height: 44px; padding: 9px 12px; font: inherit; color: var(--text); background: var(--surface); border: 1px solid #8391a8; border-radius: 5px; }
+input:focus-visible, button:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+input[aria-invalid="true"] { border-color: #9a2f25; }
+.field-hint, .field-error { margin: 7px 0 0; font-size: 0.875rem; }
+.field-hint { color: var(--muted); }
+.field-error { color: #9a2f25; }
+[hidden] { display: none !important; }
+button { justify-self: start; min-height: 44px; padding: 10px 20px; border: 1px solid var(--accent); border-radius: 5px; background: var(--accent); color: white; font: inherit; font-weight: bold; cursor: pointer; }
+button:hover { background: #294584; }
+.form-status { color: #235b37; font-weight: bold; margin: 16px 0 0; }
+.form-status:empty { display: none; }
+@media (min-width: 600px) {
+    #mood-form { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .note-field { grid-column: 1 / -1; }
+}
