@@ -32,6 +32,15 @@
     <section id="works">
         <h2>Роботи</h2>
         <p id="projects-count" aria-live="polite">Кількість робіт: 0</p>
+        <div class="gallery-filter">
+            <label for="category-filter">Показати категорію</label>
+            <select id="category-filter">
+                <option value="all">Усі роботи</option>
+                <option value="Вебдизайн">Вебдизайн</option>
+                <option value="Графічний дизайн">Графічний дизайн</option>
+            </select>
+            <p id="filter-count" aria-live="polite"></p>
+        </div>
         <div id="gallery">
         <article>
             <h3>Проєкт 1</h3>
@@ -55,6 +64,31 @@
         </article>
         </div>
         <noscript>Увімкніть JavaScript, щоб побачити всі роботи портфоліо.</noscript>
+        <div class="project-entry">
+            <h3>Додати роботу</h3>
+            <p id="form-help">Нові роботи зберігаються до перезавантаження сторінки. Для них використовується навчальний ескіз.</p>
+            <form id="project-form" aria-describedby="form-help">
+                <div class="form-field">
+                    <label for="project-title">Назва роботи</label>
+                    <input id="project-title" name="title" type="text" required>
+                </div>
+                <div class="form-field">
+                    <label for="project-year">Рік виконання</label>
+                    <input id="project-year" name="year" type="number" required min="2000" step="1" aria-describedby="year-help year-error">
+                    <small id="year-help">Від 2000 року до поточного.</small>
+                    <p id="year-error" class="field-error" aria-live="polite"></p>
+                </div>
+                <div class="form-field">
+                    <label for="project-category">Категорія нової роботи</label>
+                    <select id="project-category" name="category">
+                        <option value="Вебдизайн">Вебдизайн</option>
+                        <option value="Графічний дизайн">Графічний дизайн</option>
+                    </select>
+                </div>
+                <button type="submit">Додати роботу</button>
+            </form>
+            <p id="form-status" role="status"></p>
+        </div>
     </section>
 </main>
 <aside>

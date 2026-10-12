@@ -1,9 +1,9 @@
 'use strict';
 
 console.log('script.js підключено');
-console.log('Пашко Ростислав | ІП-53 | Практикум №7 | Варіант 2');
+console.log('Пашко Ростислав | ІП-53 | Практикум №8 | Варіант 2');
 
-const currentYear = 2026;
+const currentYear = new Date().getFullYear();
 const selectedCategory = 'Вебдизайн';
 
 // Навчальні дані для перевірки різних категорій і граничних років.
@@ -24,13 +24,22 @@ const works = [
 
 const listContainer = document.querySelector('#gallery');
 const projectsCount = document.querySelector('#projects-count');
+const categoryFilter = document.querySelector('#category-filter');
+const filterCount = document.querySelector('#filter-count');
+const form = document.querySelector('#project-form');
+const titleInput = document.querySelector('#project-title');
+const yearInput = document.querySelector('#project-year');
+const categoryInput = document.querySelector('#project-category');
+const yearError = document.querySelector('#year-error');
+const formStatus = document.querySelector('#form-status');
+yearInput.max = String(currentYear);
 
 // Видаляє першу статичну картку з HTML; решту прибере функція рендеру.
 const placeholder = document.querySelector('#gallery article');
 if (placeholder) placeholder.remove();
 
 // Повертає true, якщо за умовою варіанта роботі не більше двох років.
-const isRecent = year => (2026 - year) <= 2;
+const isRecent = year => (currentYear - year) <= 2;
 
 // Виводить роботи обраної категорії та повертає кількість знайдених робіт.
 function listWorksByCategory(items, category) {
@@ -113,7 +122,63 @@ function renderProjects(projects) {
     }
 
     projectsCount.textContent = `Кількість робіт: ${projects.length}`;
+    applyCategoryFilter();
 }
 
 renderProjects(works);
 console.log(`DOM: ${listContainer.querySelectorAll('article').length} карток; recent: ${listContainer.querySelectorAll('.recent').length}`);
+
+// Приховує картки інших категорій; усі записи залишаються в масиві та DOM.
+function applyCategoryFilter() {
+    const category = categoryFilter.value;
+    let visibleCount = 0;
+    for (const card of listContainer.querySelectorAll('article')) {
+        const hidden = category !== 'all' && card.dataset.category !== category;
+        card.classList.toggle('hidden', hidden);
+        if (!hidden) visibleCount += 1;
+    }
+    filterCount.textContent = `Показано робіт: ${visibleCount}`;
+}
+
+// Подія change перемикає фільтр без повторного створення карток.
+categoryFilter.addEventListener('change', applyCategoryFilter);
+
+// Подія input відразу перевіряє, чи рік не перевищує поточний.
+function validateYear() {
+    const future = yearInput.value !== '' && Number(yearInput.value) > currentYear;
+    const message = future ? `Рік не може бути в майбутньому. Максимум — ${currentYear}.` : '';
+    yearInput.setCustomValidity(message);
+    yearError.textContent = message;
+    yearInput.setAttribute('aria-invalid', String(!yearInput.validity.valid));
+}
+yearInput.addEventListener('input', validateYear);
+
+// Подія input відхиляє назву, яка складається лише з пробілів.
+titleInput.addEventListener('input', () => {
+    titleInput.setCustomValidity(titleInput.value !== '' && titleInput.value.trim() === ''
+        ? 'Введіть назву роботи, а не лише пробіли.' : '');
+});
+
+// Подія submit додає коректний запис і оновлює галерею без перезавантаження.
+form.addEventListener('submit', event => {
+    event.preventDefault();
+    validateYear();
+    if (!form.reportValidity()) return;
+    const title = titleInput.value.trim();
+    const year = Number(yearInput.value);
+    const category = categoryInput.value;
+    const project = {
+        title, year, category,
+        image: category === 'Вебдизайн' ? 'assets/img/project1.svg' : 'assets/img/project2.svg',
+        alt: `Навчальний ескіз роботи «${title}»`
+    };
+    works.push(project);
+    renderProjects(works);
+    form.reset();
+    yearInput.setCustomValidity('');
+    yearInput.removeAttribute('aria-invalid');
+    yearError.textContent = '';
+    const hidden = categoryFilter.value !== 'all' && categoryFilter.value !== category;
+    formStatus.textContent = `Додано роботу «${title}».${hidden ? ' Щоб її побачити, виберіть її категорію або «Усі роботи».' : ''}`;
+    console.log(`Додано: ${title} | ${year} | ${category}; усього робіт: ${works.length}`);
+});

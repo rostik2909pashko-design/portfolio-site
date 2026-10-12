@@ -319,3 +319,89 @@ footer span {
     background-color: var(--color-secondary);
     font-size: 0.8125rem;
 }
+
+/* Практикум 8: форма, перевірка року та фільтр категорій. */
+#gallery > article.hidden {
+    display: none;
+}
+
+.gallery-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.gallery-filter p {
+    margin: 0;
+    color: var(--color-caption);
+}
+
+.project-entry {
+    margin-top: 40px;
+    padding: 24px;
+    border: 1px solid var(--color-border);
+    border-radius: 6px;
+    background: var(--color-surface);
+}
+
+.project-entry > p,
+.form-field small {
+    color: var(--color-caption);
+    font-size: 0.875rem;
+}
+
+#project-form {
+    display: grid;
+    gap: 16px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+input,
+select,
+button {
+    max-width: 100%;
+    min-height: 44px;
+    padding: 10px 12px;
+    border: 1px solid var(--color-nav);
+    border-radius: 4px;
+    font: inherit;
+    color: var(--color-text);
+    background: var(--color-surface);
+}
+
+input:focus-visible,
+select:focus-visible,
+button:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+}
+
+button {
+    justify-self: start;
+    cursor: pointer;
+    color: var(--color-surface);
+    background: var(--color-text);
+}
+
+.form-field .field-error {
+    margin: 0;
+    color: #9b1c1c;
+    font-size: 0.875rem;
+}
+
+.field-error:empty,
+#form-status:empty {
+    display: none;
+}
+
+input[aria-invalid="true"] {
+    border-color: #9b1c1c;
+}
