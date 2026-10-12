@@ -122,18 +122,15 @@ section:last-child {
     max-width: 65ch;
 }
 
-#works {
+#gallery {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 32px;
 }
 
-#works > h2 {
-    grid-column: 1 / -1;
-    margin-bottom: 0;
-}
 
-#works > article {
+
+#gallery > article {
     min-width: 0;
     margin: 0;
     padding: 20px;
@@ -148,7 +145,7 @@ img {
     height: auto;
 }
 
-#works > article img {
+#gallery > article img {
     display: block;
     width: 100%;
     aspect-ratio: 3 / 2;
@@ -157,7 +154,7 @@ img {
     border-radius: 4px;
 }
 
-#works > article p {
+#gallery > article p {
     margin: 0;
     color: var(--color-caption);
     font-size: 0.875rem;
@@ -214,18 +211,18 @@ footer span {
 
 /* Акцент з'являється лише при наведенні, щоб інтерфейс не конкурував із кольорами самих робіт. */
 @media (hover: hover) {
-    #works > article:hover {
+    #gallery > article:hover {
         border-color: var(--color-accent);
     }
 
-    #works > article:hover p {
+    #gallery > article:hover p {
         color: var(--color-accent);
     }
 }
 
 @media (prefers-reduced-motion: reduce) {
-    #works > article,
-    #works > article p {
+    #gallery > article,
+    #gallery > article p {
         transition: none;
     }
 }
@@ -243,7 +240,7 @@ footer span {
         padding: 36px 24px;
     }
 
-    #works {
+    #gallery {
         grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         max-width: 680px;
         gap: 32px;
@@ -282,7 +279,7 @@ footer span {
         padding: 40px 32px;
     }
 
-    #works {
+    #gallery {
         max-width: none;
         grid-template-columns: repeat(3, minmax(0, 1fr));
         gap: 40px;
@@ -297,4 +294,28 @@ footer span {
     footer {
         padding: 24px;
     }
+}
+
+/* Практикум 7: динамічна галерея та позначення нещодавніх робіт. */
+#projects-count {
+    margin: 0 0 24px;
+    color: var(--color-caption);
+}
+
+#gallery > article p + p {
+    margin-top: 4px;
+}
+
+#gallery > article.recent {
+    border-color: var(--color-nav);
+}
+
+.project-badge {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    color: var(--color-text);
+    background-color: var(--color-secondary);
+    font-size: 0.8125rem;
 }
